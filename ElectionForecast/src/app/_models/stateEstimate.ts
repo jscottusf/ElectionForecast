@@ -1,0 +1,36 @@
+export class StateEstimate {
+  branch: string;
+  candidate_3rd: string;
+  candidate_chal: string;
+  candidate_inc: string;
+  cycle: string;
+  margin: string;
+  margin_hi: string;
+  margin_lo: string;
+  model: string;
+  modeldate: string;
+  simulations: string;
+  state: string;
+  timestamp: string;
+  tipping: string;
+  voteshare_3rd: string;
+  voteshare_3rd_hi: string;
+  voteshare_3rd_lo: string;
+  voteshare_chal: string;
+  voteshare_chal_hi: string;
+  voteshare_chal_lo: string;
+  voteshare_inc: string;
+  voteshare_inc_hi: string;
+  voteshare_inc_lo: string;
+  voteshare_other: string;
+  voteshare_other_hi: string;
+  voteshare_other_lo: string;
+  vpi: string;
+  win_EC_if_win_state_chal: string;
+  win_EC_if_win_state_inc: string;
+  win_state_if_win_EC_chal: string;
+  win_state_if_win_EC_inc: string;
+  winstate_3rd: string;
+  winstate_chal: string;
+  winstate_inc: string;
+}

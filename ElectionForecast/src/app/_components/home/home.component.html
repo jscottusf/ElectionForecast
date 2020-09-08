@@ -1,1 +1,20 @@
-<p>home works!</p>
+<div class="row">
+  <div class="col-lg-9 p-2">
+    <h1>FiveThirtyEight Election Model by Nate Silver</h1>
+    <p>UI Redesign by Joel Scott using Angular with firebase hosting</p>
+  </div>
+  <div class="col-lg-3">
+    <img src="../../../assets/FTE-2020-Wordmark.svg" />
+  </div>
+</div>
+<div class="container my-3">
+  <div class="row">
+    <div class="col-lg-12">
+      <h2 class="card-header-title us forecast visible text-center">
+        2020 Presidential Election Model
+      </h2>
+      <hr />
+      <electoral-college [stateEstimates]="stateData"></electoral-college>
+    </div>
+  </div>
+</div>

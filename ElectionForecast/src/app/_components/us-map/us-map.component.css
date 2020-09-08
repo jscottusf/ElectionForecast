@@ -1,0 +1,17 @@
+.map-tooltip-table {
+  background: white;
+  padding: 4px;
+  border-radius: 4px;
+  width: 15%;
+}
+table {
+  border-collapse: collapse;
+  width: 100%;
+  background: white;
+}
+table tr td {
+  border: 1px solid #fff;
+  padding: 3px 5px 3px 5px;
+  text-transform: capitalize;
+  color: black;
+}

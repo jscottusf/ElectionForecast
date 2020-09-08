@@ -1,35 +1,36 @@
 import { Component, OnInit } from '@angular/core';
 import { CSVService } from '../../_services/csv.service';
+import { StateEstimate } from '../../_models/stateEstimate';
+import { NationalEstimate } from '../../_models/nationalEstimate';
 
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
-  styleUrls: ['./home.component.scss']
+  styleUrls: ['./home.component.scss'],
 })
 export class HomeComponent implements OnInit {
   csvContent: string;
-  stateData: any[] = [];
-  nationalData: any[] = [];
+  stateData: StateEstimate[];
+  nationalData: NationalEstimate[];
 
-  constructor(private csvService: CSVService) { }
-
-  ngOnInit(): void {
+  constructor(private csvService: CSVService) {
     this.getStateData();
     this.getNationalData();
   }
 
+  ngOnInit(): void {}
+
   getStateData() {
-    this.csvService.getStateData().subscribe(data => {
+    this.csvService.getStateData().subscribe((data) => {
       this.stateData = this.onFileLoad(data);
       console.log(this.stateData);
     });
   }
 
   getNationalData() {
-    this.csvService.getNationalData().subscribe(data => {
+    this.csvService.getNationalData().subscribe((data) => {
       this.nationalData = this.onFileLoad(data);
-      console.log(this.nationalData);
-    })
+    });
   }
 
   onFileLoad(csv) {
@@ -44,7 +45,7 @@ export class HomeComponent implements OnInit {
       if (flag) {
         let obj = {};
         for (let k = 0; k < size; k++) {
-          obj[prop[k]] = line.split(',')[k]
+          obj[prop[k]] = line.split(',')[k];
         }
         objarray.push(obj);
       } else {
@@ -55,7 +56,7 @@ export class HomeComponent implements OnInit {
         flag = true;
       }
     }
-    
+
     return objarray;
   }
 }
