@@ -23,7 +23,7 @@ export class HomeComponent implements OnInit {
   getStateData() {
     this.csvService.getStateData().subscribe((data) => {
       this.stateData = this.onFileLoad(data);
-      console.log(this.stateData);
+      //console.log(this.stateData);
     });
   }
 

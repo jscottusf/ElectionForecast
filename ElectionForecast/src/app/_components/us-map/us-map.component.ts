@@ -24,11 +24,19 @@ export class UsMapComponent implements OnInit {
   constructor(public mapStates: MapStates) {}
   ngOnInit() {}
   ngOnChanges(changes: SimpleChanges) {
-    this.setUnfillColor();
-    this.change = JSON.parse(JSON.stringify(changes.ids));
-    this.change.currentValue.forEach((data) => {
-      document.getElementById(data.code).style.fill = this.colors.fill;
-    });
+    setTimeout(() => {
+      //this.setUnfillColor();
+      this.change = JSON.parse(JSON.stringify(changes.ids));
+      this.change.currentValue.forEach((data) => {
+        let stateId = document.getElementById(data.state);
+        // if (stateId) {
+        //   stateId.style.fill = this.colors.fill
+        // }
+        stateId
+          ? (stateId.style.fill = this.colors.fill)
+          : console.log(data.state);
+      });
+    }, 500);
   }
   setUnfillColor() {
     Object.keys(this.mapStates.statelist).forEach((id) => {
