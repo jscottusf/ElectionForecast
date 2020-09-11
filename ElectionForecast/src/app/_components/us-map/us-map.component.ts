@@ -1,5 +1,7 @@
 import { Component, OnInit, SimpleChanges, Input } from '@angular/core';
 import { MapStates } from '../../_services/map.service';
+import { CSVService } from '../../_services/csv.service';
+import { StateEstimate } from '../../_models/stateEstimate';
 
 @Component({
   selector: 'us-map',
@@ -13,14 +15,17 @@ export class UsMapComponent implements OnInit {
   enableTooltip: boolean;
   @Input()
   toolTipObject: any;
-  @Input()
   colors: any = {
-    unfill: '#b6b6b6',
-    fill: '#518a38',
-    leansD: 'blue',
+    leansD: '#d2e4fa',
+    likelyD: '#7db9f2',
+    solidD: '#2aa1ec',
+    leansR: '#ffc2b5',
+    likelyR: '#ff9987',
+    solidR: '#fe6a59',
   };
   showToolTip: boolean;
   change: any;
+  stateEstimates: StateEstimate[];
   constructor(public mapStates: MapStates) {}
   ngOnInit() {}
   ngOnChanges(changes: SimpleChanges) {
@@ -29,12 +34,24 @@ export class UsMapComponent implements OnInit {
       this.change = JSON.parse(JSON.stringify(changes.ids));
       this.change.currentValue.forEach((data) => {
         let stateId = document.getElementById(data.state);
-        // if (stateId) {
-        //   stateId.style.fill = this.colors.fill
-        // }
-        stateId
-          ? (stateId.style.fill = this.colors.fill)
-          : console.log(data.state);
+        if (stateId) {
+          let incWin = data.winstate_inc * 100;
+          if (incWin >= 90) {
+            stateId.style.fill = this.colors.solidR;
+          } else if (incWin >= 70 && incWin < 90) {
+            stateId.style.fill = this.colors.likelyR;
+          } else if (incWin >= 50 && incWin < 70) {
+            stateId.style.fill = this.colors.leansR;
+          } else if (incWin < 50 && incWin >= 30) {
+            stateId.style.fill = this.colors.leansD;
+          } else if (incWin < 30 && incWin >= 10) {
+            stateId.style.fill = this.colors.likelyD;
+          } else if (incWin < 10) {
+            stateId.style.fill = this.colors.solidD;
+          }
+        } else {
+          console.log(data.state);
+        }
       });
     }, 500);
   }
@@ -60,12 +77,12 @@ export class UsMapComponent implements OnInit {
   createToolTipData(event, id) {
     let selectedstate = JSON.parse(JSON.stringify(this.change.currentValue));
     selectedstate = selectedstate.filter((data) => {
-      return data.code === id;
+      return data.state === id;
     })[0];
-    if (selectedstate && selectedstate.code === id) {
+    if (selectedstate && selectedstate.state === id) {
       this.showToolTip = true;
       selectedstate['state'] = this.mapStates.statelist[id];
-      delete selectedstate.code;
+      delete selectedstate.state;
       return Object.keys(selectedstate).map((key, value) => {
         return [key, selectedstate[key]];
       });
