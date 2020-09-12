@@ -15,7 +15,7 @@ export class ElectoralCollegeComponent implements OnInit {
   ngOnInit() {
     setTimeout(() => {
       this.mapStates();
-    }, 500);
+    }, 600);
   }
 
   mapStates() {
@@ -24,13 +24,4 @@ export class ElectoralCollegeComponent implements OnInit {
     });
     console.log(this.stateData);
   }
-
-  selectedState: any = [
-    { code: 'North Dakota', users: 324, 'org type': 'Service Provider' },
-    { code: 'Washington', users: 454, 'org type': 'Manufacturer' },
-    { code: 'Arizona', users: 234, 'org type': 'Service Provider' },
-    { code: 'Alaska', users: 544, 'org type': 'Manufacturer' },
-    { code: 'Connecticut', users: 544, 'org type': 'Manufacturer' },
-    { code: 'Florida', users: 544, 'org type': 'Manufacturer' },
-  ];
 }

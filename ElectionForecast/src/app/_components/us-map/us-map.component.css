@@ -1,17 +1,19 @@
-.map-tooltip-table {
-  background: white;
-  padding: 4px;
-  border-radius: 4px;
-  width: 15%;
+.state {
+  font-size: 20px;
 }
-table {
-  border-collapse: collapse;
+
+.chance {
+  font-size: 16px;
+  font-weight: 600;
+  margin: 10px 0;
+}
+
+.progress {
+  height: 10px;
   width: 100%;
-  background: white;
 }
-table tr td {
-  border: 1px solid #fff;
-  padding: 3px 5px 3px 5px;
-  text-transform: capitalize;
-  color: black;
+
+.candidate {
+  font-size: 16px;
+  margin: 5px 0;
 }

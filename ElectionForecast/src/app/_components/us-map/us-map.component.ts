@@ -2,6 +2,7 @@ import { Component, OnInit, SimpleChanges, Input } from '@angular/core';
 import { MapStates } from '../../_services/map.service';
 import { CSVService } from '../../_services/csv.service';
 import { StateEstimate } from '../../_models/stateEstimate';
+import { Chart } from 'chart.js';
 
 @Component({
   selector: 'us-map',
@@ -26,6 +27,12 @@ export class UsMapComponent implements OnInit {
   showToolTip: boolean;
   change: any;
   stateEstimates: StateEstimate[];
+  selected: StateEstimate;
+  leftBar: any;
+  rightBar: any;
+  background: any;
+  voteBackground: any;
+
   constructor(public mapStates: MapStates) {}
   ngOnInit() {}
   ngOnChanges(changes: SimpleChanges) {
@@ -53,7 +60,7 @@ export class UsMapComponent implements OnInit {
           console.log(data.state);
         }
       });
-    }, 500);
+    }, 1000);
   }
   setUnfillColor() {
     Object.keys(this.mapStates.statelist).forEach((id) => {
@@ -61,7 +68,7 @@ export class UsMapComponent implements OnInit {
     });
   }
   mouseEnter(ttid, e, id) {
-    document.getElementById(id).style['stroke-width'] = '1.999999';
+    document.getElementById(id).style['stroke-width'] = '3';
     if (this.enableTooltip) {
       this.toolTipObject = this.createToolTipData(event, id);
       this.positionToolTip(e, ttid);
@@ -75,19 +82,46 @@ export class UsMapComponent implements OnInit {
     }
   }
   createToolTipData(event, id) {
-    let selectedstate = JSON.parse(JSON.stringify(this.change.currentValue));
-    selectedstate = selectedstate.filter((data) => {
-      return data.state === id;
-    })[0];
-    if (selectedstate && selectedstate.state === id) {
-      this.showToolTip = true;
-      selectedstate['state'] = this.mapStates.statelist[id];
-      delete selectedstate.state;
-      return Object.keys(selectedstate).map((key, value) => {
-        return [key, selectedstate[key]];
-      });
-    }
+    this.showToolTip = true;
+    let selectedstates = this.change.currentValue;
+    selectedstates.filter((data) => {
+      if (data.state === id) {
+        this.selected = data;
+        let leftBar = data.winstate_chal * 100 + '%';
+        let rightBar = data.winstate_inc * 100 + '%';
+        this.background =
+          leftBar > rightBar
+            ? 'linear-gradient(to right, #179edf ' +
+              leftBar +
+              ', #ff5e40 ' +
+              rightBar +
+              ')'
+            : 'linear-gradient(to left, #ff5e40 ' +
+              rightBar +
+              ', #179edf ' +
+              leftBar +
+              ')';
+
+        this.voteBackground =
+          data.voteshare_chal > data.voteshare_inc
+            ? 'linear-gradient(to right, #179edf ' +
+              data.voteshare_chal +
+              '%' +
+              ', #ff5e40 ' +
+              data.voteshare_inc +
+              '%' +
+              ')'
+            : 'linear-gradient(to left, #ff5e40 ' +
+              data.voteshare_inc +
+              '%' +
+              ', #179edf ' +
+              data.voteshare_chal +
+              '%' +
+              ')';
+      }
+    });
   }
+
   positionToolTip(e, ttid) {
     document.getElementById(ttid).style.left = `${e.clientX + 2}px`;
     document.getElementById(ttid).style.top = `${e.clientY + 2}px`;

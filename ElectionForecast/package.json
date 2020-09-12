@@ -18,10 +18,11 @@
     "@angular/platform-browser": "^7.2.5",
     "@angular/platform-browser-dynamic": "^7.2.5",
     "@angular/router": "^7.2.5",
+    "bootstrap": "^4.5.2",
+    "chart.js": "^2.9.3",
     "core-js": "^2.6.5",
     "rxjs": "^6.4.0",
-    "zone.js": "^0.8.29",
-    "bootstrap": "^4.5.2"
+    "zone.js": "^0.8.29"
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "~0.10.0",

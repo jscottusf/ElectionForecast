@@ -543,16 +543,36 @@
     style="
       background: white;
       padding: 4px;
-      border-radius: 4px;
-      width: 100%;
-      border: solid black;
+      border-radius: 0px;
+      width: 300px;
+      border: solid black 3px;
     "
   >
-    WHATS UP HOMIE??????
-    <table>
-      <tr *ngFor="let item of toolTipObject">
-        <td *ngFor="let pair of item">{{ pair }}</td>
-      </tr>
-    </table>
+    <h1 class="text-left state">{{ selected.state }}</h1>
+    <div class="text-left chance">Chance of winning</div>
+    <div class="row candidates">
+      <div class="col-6 text-left candidate">
+        <div>{{ selected.candidate_chal }}</div>
+        <div>{{ selected.winstate_chal | percent }}</div>
+      </div>
+      <div class="col-6 text-right candidate">
+        <div>{{ selected.candidate_inc }}</div>
+        <div>{{ selected.winstate_inc | percent }}</div>
+      </div>
+    </div>
+    <div class="progress" [style.background]="background"></div>
+    <hr />
+    <div class="text-left chance">Projected Vote</div>
+    <div class="row candidates">
+      <div class="col-6 text-left candidate">
+        <div>{{ selected.candidate_chal }}</div>
+        <div>{{ selected.voteshare_chal | number: "1.0-0" }}%</div>
+      </div>
+      <div class="col-6 text-right candidate">
+        <div>{{ selected.candidate_inc }}</div>
+        <div>{{ selected.voteshare_inc | number: "1.0-0" }}%</div>
+      </div>
+    </div>
+    <div class="progress mb-3" [style.background]="voteBackground"></div>
   </div>
 </div>
