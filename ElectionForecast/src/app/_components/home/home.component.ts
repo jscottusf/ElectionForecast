@@ -70,6 +70,11 @@ export class HomeComponent implements OnInit {
         let trumpWin = parseFloat(data.ecwin_inc) * 100;
         return Math.round(trumpWin);
       });
+      this.lineLabels.reverse();
+      this.lineDataBiden.reverse();
+      this.lineDataTrump.reverse();
+      this.chartData();
+      this.chartLineData();
       let timestamp = this.nationalProjection.timestamp;
       let date = new Date(timestamp);
       let format = new Intl.DateTimeFormat().format(date);
@@ -78,11 +83,6 @@ export class HomeComponent implements OnInit {
         hour: 'numeric',
         minute: 'numeric',
       }).format(date);
-      this.lineLabels.reverse();
-      this.lineDataBiden.reverse();
-      this.lineDataTrump.reverse();
-      this.chartData();
-      this.chartLineData();
     });
   }
 
