@@ -13,15 +13,12 @@ export class ElectoralCollegeComponent implements OnInit {
   constructor() {}
 
   ngOnInit() {
-    setTimeout(() => {
-      this.mapStates();
-    }, 600);
+    this.mapStates();
   }
 
   mapStates() {
     this.stateData = this.stateEstimates.slice(0, 56).map((state) => {
       return state;
     });
-    console.log(this.stateData);
   }
 }

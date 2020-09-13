@@ -15,10 +15,16 @@ export class HomeComponent implements OnInit {
   nationalData: NationalEstimate[];
   nationalProjection: NationalEstimate;
   chart = [];
+  linechart = [];
+  lineLabels = [];
+  lineDataBiden = [];
+  lineDataTrump = [];
   favorite: string;
   likelyhood: string;
   likelyhoodNum: number;
   likelyVerb: string;
+  lastUpdate: any;
+  lastUpdateTime: string;
 
   constructor(private csvService: CSVService) {
     this.getStateData();
@@ -45,9 +51,7 @@ export class HomeComponent implements OnInit {
         this.favorite == this.nationalProjection.ecwin_inc
           ? this.nationalProjection.ecwin_inc
           : this.nationalProjection.ecwin_chal;
-      console.log(this.likelyhood);
       this.likelyhoodNum = parseFloat(this.likelyhood) * 100;
-      console.log(this.likelyhoodNum);
       if (this.likelyhood < '.70') {
         this.likelyVerb = 'slightly favored';
       } else if (this.likelyhood < '.90' && this.likelyhood >= '.70') {
@@ -55,7 +59,30 @@ export class HomeComponent implements OnInit {
       } else {
         this.likelyVerb = 'very likely';
       }
+      this.lineLabels = this.nationalData.map((data) => {
+        return data.modeldate === undefined ? '' : data.modeldate;
+      });
+      this.lineDataBiden = this.nationalData.map((data) => {
+        let bidenWin = parseFloat(data.ecwin_chal) * 100;
+        return Math.round(bidenWin);
+      });
+      this.lineDataTrump = this.nationalData.map((data) => {
+        let trumpWin = parseFloat(data.ecwin_inc) * 100;
+        return Math.round(trumpWin);
+      });
+      let timestamp = this.nationalProjection.timestamp;
+      let date = new Date(timestamp);
+      let format = new Intl.DateTimeFormat().format(date);
+      this.lastUpdate = format;
+      this.lastUpdateTime = new Intl.DateTimeFormat('default', {
+        hour: 'numeric',
+        minute: 'numeric',
+      }).format(date);
+      this.lineLabels.reverse();
+      this.lineDataBiden.reverse();
+      this.lineDataTrump.reverse();
       this.chartData();
+      this.chartLineData();
     });
   }
 
@@ -125,6 +152,103 @@ export class HomeComponent implements OnInit {
               );
             },
           },
+        },
+      },
+    });
+  }
+
+  chartLineData() {
+    Chart.defaults.LineWithLine = Chart.defaults.line;
+    Chart.controllers.LineWithLine = Chart.controllers.line.extend({
+      draw: function (ease) {
+        Chart.controllers.line.prototype.draw.call(this, ease);
+
+        if (this.chart.tooltip._active && this.chart.tooltip._active.length) {
+          var activePoint = this.chart.tooltip._active[0],
+            ctx = this.chart.ctx,
+            x = activePoint.tooltipPosition().x,
+            topY = this.chart.scales['y-axis-0'].top,
+            bottomY = this.chart.scales['y-axis-0'].bottom;
+
+          // draw line
+          ctx.save();
+          ctx.beginPath();
+          ctx.moveTo(x, topY);
+          ctx.lineTo(x, bottomY);
+          ctx.lineWidth = 3;
+          ctx.strokeStyle = 'black';
+          ctx.stroke();
+          ctx.restore();
+        }
+      },
+    });
+    this.chart = new Chart('line', {
+      type: 'LineWithLine',
+      data: {
+        labels: this.lineLabels,
+        datasets: [
+          {
+            label: 'Biden',
+            fill: false,
+            borderColor: '#179edf',
+            backgroundColor: '#179edf',
+            pointBackgroundColor: '#179edf',
+            pointBorderColor: '#179edf',
+            pointHoverBackgroundColor: '#179edf',
+            pointHoverBorderColor: '#179edf',
+            borderWidth: 8,
+            data: this.lineDataBiden,
+          },
+          {
+            fill: false,
+            label: 'Trump',
+            fillColor: '#ff5e40',
+            pointColor: '#ff5e40',
+            borderColor: '#ff5e40',
+            pointBackgroundColor: '#ff5e40',
+            pointBorderColor: '#ff5e40',
+            pointHoverBackgroundColor: '#ff5e40',
+            pointHoverBorderColor: '#ff5e40',
+            borderWidth: 8,
+            data: this.lineDataTrump,
+          },
+        ],
+      },
+      options: {
+        scales: {
+          yAxes: [
+            {
+              ticks: {
+                suggestedMin: 0,
+                suggestedMax: 100,
+              },
+            },
+          ],
+        },
+        legend: {
+          display: false,
+        },
+        tooltips: {
+          mode: 'index',
+          intersect: false,
+          callbacks: {
+            label: function (tooltipItem, data) {
+              var dataset = data.datasets[tooltipItem.datasetIndex];
+              var index = tooltipItem.index;
+              var currentValue = dataset.data[index];
+              return (
+                ' ' +
+                dataset.label +
+                ' wins the election ' +
+                currentValue +
+                '% of the time'
+              );
+            },
+          },
+        },
+        hover: {
+          mode: 'index',
+          intersect: false,
         },
       },
     });

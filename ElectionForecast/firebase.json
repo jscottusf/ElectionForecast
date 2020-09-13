@@ -1,0 +1,12 @@
+{
+  "hosting": {
+    "public": "dist/ElectionForecast",
+    "ignore": ["firebase.json/ElectionForecast", "**/.*", "**/node_modules/**"],
+    "rewrites": [
+      {
+        "source": "**",
+        "destination": "/index.html"
+      }
+    ]
+  }
+}

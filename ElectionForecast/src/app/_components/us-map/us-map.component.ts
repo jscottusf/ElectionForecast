@@ -1,8 +1,12 @@
-import { Component, OnInit, SimpleChanges, Input } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  SimpleChanges,
+  Input,
+  HostListener,
+} from '@angular/core';
 import { MapStates } from '../../_services/map.service';
-import { CSVService } from '../../_services/csv.service';
 import { StateEstimate } from '../../_models/stateEstimate';
-import { Chart } from 'chart.js';
 
 @Component({
   selector: 'us-map',
@@ -32,36 +36,41 @@ export class UsMapComponent implements OnInit {
   rightBar: any;
   background: any;
   voteBackground: any;
+  public innerWidth: any;
+  @HostListener('window:resize', ['$event'])
+  onResize(event) {
+    this.innerWidth = window.innerWidth;
+  }
 
   constructor(public mapStates: MapStates) {}
-  ngOnInit() {}
-  ngOnChanges(changes: SimpleChanges) {
-    setTimeout(() => {
-      //this.setUnfillColor();
-      this.change = JSON.parse(JSON.stringify(changes.ids));
-      this.change.currentValue.forEach((data) => {
-        let stateId = document.getElementById(data.state);
-        if (stateId) {
-          let incWin = data.winstate_inc * 100;
-          if (incWin >= 90) {
-            stateId.style.fill = this.colors.solidR;
-          } else if (incWin >= 70 && incWin < 90) {
-            stateId.style.fill = this.colors.likelyR;
-          } else if (incWin >= 50 && incWin < 70) {
-            stateId.style.fill = this.colors.leansR;
-          } else if (incWin < 50 && incWin >= 30) {
-            stateId.style.fill = this.colors.leansD;
-          } else if (incWin < 30 && incWin >= 10) {
-            stateId.style.fill = this.colors.likelyD;
-          } else if (incWin < 10) {
-            stateId.style.fill = this.colors.solidD;
-          }
-        } else {
-          console.log(data.state);
-        }
-      });
-    }, 1000);
+  ngOnInit() {
+    this.innerWidth = window.innerWidth;
   }
+  ngOnChanges(changes: SimpleChanges) {
+    this.change = JSON.parse(JSON.stringify(changes.ids));
+    this.change.currentValue.forEach((data) => {
+      let stateId = document.getElementById(data.state);
+      if (stateId) {
+        let incWin = data.winstate_inc * 100;
+        if (incWin >= 90) {
+          stateId.style.fill = this.colors.solidR;
+        } else if (incWin >= 70 && incWin < 90) {
+          stateId.style.fill = this.colors.likelyR;
+        } else if (incWin >= 50 && incWin < 70) {
+          stateId.style.fill = this.colors.leansR;
+        } else if (incWin < 50 && incWin >= 30) {
+          stateId.style.fill = this.colors.leansD;
+        } else if (incWin < 30 && incWin >= 10) {
+          stateId.style.fill = this.colors.likelyD;
+        } else if (incWin < 10) {
+          stateId.style.fill = this.colors.solidD;
+        }
+      } else {
+        console.log(data.state);
+      }
+    });
+  }
+
   setUnfillColor() {
     Object.keys(this.mapStates.statelist).forEach((id) => {
       document.getElementById(id).style.fill = this.colors.unfill;
