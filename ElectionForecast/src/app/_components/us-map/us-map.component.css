@@ -25,3 +25,7 @@ path {
 #SLTP {
   z-index: 1;
 }
+
+.no-state {
+  padding-top: 100px;
+}

@@ -48,7 +48,7 @@ export class HomeComponent implements OnInit {
           ? this.nationalProjection.candidate_inc
           : this.nationalProjection.candidate_chal;
       this.likelyhood =
-        this.favorite == this.nationalProjection.ecwin_inc
+        this.favorite == this.nationalProjection.candidate_inc
           ? this.nationalProjection.ecwin_inc
           : this.nationalProjection.ecwin_chal;
       this.likelyhoodNum = parseFloat(this.likelyhood) * 100;

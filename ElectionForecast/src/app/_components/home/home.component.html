@@ -18,9 +18,9 @@
       <h2 class="card-header-title us forecast visible text-center mt-3 py-0">
         2020 Presidential Election Model
       </h2>
-      <!-- <p class="text-center pt-2">
+      <p class="text-center pt-2">
         Last updated on {{ lastUpdate }} at {{ lastUpdateTime }}
-      </p> -->
+      </p>
       <hr />
       <h1 class="top top-powerbar">
         {{ favorite }} is {{ likelyVerb }} to win the election
@@ -30,10 +30,10 @@
 
   <br />
   <p class="pb-2">
-    FiveThirtyEight simulates the election 40,000 times to see who wins most
-    often. The data below gives you a good idea of the range of scenarios that
-    the FiveThirtyEight model thinks is possible. Based on current polls and
-    fundamentals, {{ favorite }} wins the election in
+    FiveThirtyEight simulates the election 40,000 times at least once per day
+    and anytime new polling data comes in. The data below gives you a good idea
+    of the range of scenarios that the FiveThirtyEight model thinks is possible.
+    Based on current polls and fundamentals, {{ favorite }} wins the election in
     {{ likelyhoodNum | number: "1.0-0" }} out of every 100 simulations.
   </p>
   <div class="row">
