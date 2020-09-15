@@ -3,6 +3,7 @@ import { CSVService } from '../../_services/csv.service';
 import { StateEstimate } from '../../_models/stateEstimate';
 import { NationalEstimate } from '../../_models/nationalEstimate';
 import { Chart } from 'chart.js';
+import * as moment from 'moment';
 
 @Component({
   selector: 'app-home',
@@ -76,13 +77,7 @@ export class HomeComponent implements OnInit {
       this.chartData();
       this.chartLineData();
       let timestamp = this.nationalProjection.timestamp;
-      let date = new Date(timestamp);
-      let format = new Intl.DateTimeFormat().format(date);
-      this.lastUpdate = format;
-      this.lastUpdateTime = new Intl.DateTimeFormat('default', {
-        hour: 'numeric',
-        minute: 'numeric',
-      }).format(date);
+      this.lastUpdate = moment(timestamp).format('MMMM Do YYYY [at] h:mm a');
     });
   }
 
