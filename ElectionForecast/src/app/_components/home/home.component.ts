@@ -24,8 +24,7 @@ export class HomeComponent implements OnInit {
   likelyhood: string;
   likelyhoodNum: number;
   likelyVerb: string;
-  lastUpdate: any;
-  lastUpdateTime: string;
+  moment: any = moment;
 
   constructor(private csvService: CSVService) {
     this.getStateData();
@@ -76,8 +75,6 @@ export class HomeComponent implements OnInit {
       this.lineDataTrump.reverse();
       this.chartData();
       this.chartLineData();
-      let timestamp = this.nationalProjection.timestamp;
-      this.lastUpdate = moment(timestamp).format('MMMM Do YYYY [at] h:mm a');
     });
   }
 

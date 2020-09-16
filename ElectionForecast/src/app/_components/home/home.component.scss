@@ -2,6 +2,28 @@
   margin: 0 0 0px 0;
 }
 
+.map-container {
+  padding-right: 5px;
+  padding-left: 5px;
+  margin-right: auto;
+  margin-left: auto;
+}
+@media (min-width: 768px) {
+  .map-container {
+    width: 750px;
+  }
+}
+@media (min-width: 992px) {
+  .map-container {
+    width: 970px;
+  }
+}
+@media (min-width: 1200px) {
+  .map-container {
+    width: 1170px;
+  }
+}
+
 #line {
   cursor: crosshair;
 }

@@ -18,9 +18,14 @@
       <h2 class="card-header-title us forecast visible text-center mt-3 py-0">
         2020 Presidential Election Model
       </h2>
-      <div *ngIf="lastUpdate">
-        <p class="text-center pt-2">Last updated on {{ lastUpdate }}</p>
-      </div>
+      <p class="text-center pt-2">
+        Last updated on
+        {{
+          moment(nationalProjection.timestamp).format(
+            "MMMM Do YYYY [at] h:mm a"
+          )
+        }}
+      </p>
       <hr />
       <h1 class="top top-powerbar">
         {{ favorite }} is {{ likelyVerb }} to win the election
