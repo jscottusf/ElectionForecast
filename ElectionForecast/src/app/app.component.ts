@@ -17,7 +17,8 @@ export class AppComponent implements OnInit {
     });
     this.meta.updateTag({
       property: 'og:image',
-      content: './assets/electionjs.png',
+      content:
+        'https://github.com/jscottusf/ElectionForecast/blob/master/ElectionForecast/src/assets/electionjs.png?raw=true',
       itemprop: 'image',
     });
     this.meta.updateTag({

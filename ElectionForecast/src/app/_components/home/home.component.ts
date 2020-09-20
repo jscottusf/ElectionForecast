@@ -3,7 +3,6 @@ import { CSVService } from '../../_services/csv.service';
 import { StateEstimate } from '../../_models/stateEstimate';
 import { NationalEstimate } from '../../_models/nationalEstimate';
 import { Chart } from 'chart.js';
-import * as moment from 'moment';
 
 @Component({
   selector: 'app-home',
@@ -24,7 +23,8 @@ export class HomeComponent implements OnInit {
   likelyhood: string;
   likelyhoodNum: number;
   likelyVerb: string;
-  moment: any = moment;
+  dateString: any;
+  time: string;
 
   constructor(private csvService: CSVService) {
     this.getStateData();
@@ -75,6 +75,13 @@ export class HomeComponent implements OnInit {
       this.lineDataTrump.reverse();
       this.chartData();
       this.chartLineData();
+      let timestamp = this.nationalProjection.timestamp;
+      let date = new Date(timestamp).toDateString();
+      this.dateString = date;
+      this.time = new Intl.DateTimeFormat('en-US', {
+        hour: 'numeric',
+        minute: 'numeric',
+      }).format(this.dateString);
     });
   }
 
