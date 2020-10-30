@@ -1,6 +1,6 @@
 # ElectionForecast
 
-Nate Silver's FiveThirtyEight election model integrated into an Angular UI of my own creation. This application will update everytime fivethirty updates their model.
+Nate Silver's FiveThirtyEight election model integrated into an Angular UI of my own creation. This application will update everytime fivethirtyeight updates their model.
 
 The data is taken from directly from the publically available csv files containing the fivethirtyeight's forecast data.
 This application takes that data and converts it into a JSON format in order to be visualized.
